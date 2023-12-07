@@ -53,10 +53,11 @@ public class UserController : ControllerBase
         {
             var userToUpdate = _service.GetUser(email);
             if (userToUpdate == null) return NotFound("User not found");
-            
+
             _service.UpdateUser(user);
             return Ok();
-        } catch(Exception)
+        }
+        catch (Exception)
         {
             return BadRequest();
         }
@@ -66,6 +67,10 @@ public class UserController : ControllerBase
     [HttpDelete("{email}")]
     public IActionResult Delete(string email)
     {
-        throw new NotImplementedException();
+        var userToUpdate = _service.GetUser(email);
+        if (userToUpdate == null) return NotFound("User not found");
+
+        _service.DeleteUser(email);
+        return NoContent();
     }
 }
