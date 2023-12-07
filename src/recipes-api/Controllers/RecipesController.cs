@@ -57,6 +57,7 @@ public class RecipesController : ControllerBase
         {
             var recipeToUpdate = _service.GetRecipe(name);
             if (recipeToUpdate == null) return NotFound("Recipe not found");
+            
             _service.UpdateRecipe(recipe);
             return NoContent();
         }
