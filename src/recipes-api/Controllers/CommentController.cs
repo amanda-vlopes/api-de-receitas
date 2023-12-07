@@ -12,24 +12,25 @@ namespace recipes_api.Controllers;
 [ApiController]
 [Route("comment")]
 public class CommentController : ControllerBase
-{  
+{
     public readonly ICommentService _service;
-    
+
     public CommentController(ICommentService service)
     {
-        this._service = service;        
+        this._service = service;
     }
 
     // 10 - Sua aplicação deve ter o endpoint POST /comment
     [HttpPost]
-    public IActionResult Create([FromBody]Comment comment)
+    public IActionResult Create([FromBody] Comment comment)
     {
         try
         {
-        _service.AddComment(comment);
-        return CreatedAtAction("Create", comment);
+            _service.AddComment(comment);
+            return CreatedAtAction("Create", comment);
 
-        } catch(Exception)
+        }
+        catch (Exception)
         {
             return BadRequest();
         }
@@ -38,7 +39,15 @@ public class CommentController : ControllerBase
     // 11 - Sua aplicação deve ter o endpoint GET /comment/:recipeName
     [HttpGet("{name}", Name = "GetComment")]
     public IActionResult Get(string name)
-    {                
-        throw new NotImplementedException();                   
+    {
+        try
+        {
+            List<Comment> comments = _service.GetComments(name);
+            return Ok(comments);
+        }
+        catch (Exception)
+        {
+            return BadRequest();
+        }
     }
 }
